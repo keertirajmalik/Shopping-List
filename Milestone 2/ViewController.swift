@@ -32,13 +32,26 @@ class ViewController: UITableViewController {
 extension ViewController {
     
     @objc func updateList(){
-       
+        let ac = UIAlertController(title: "Enter the Item name", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        
+        let submitAction = UIAlertAction(title: "Add", style: .default) { [weak self, weak ac] action in
+            guard let answer = ac?.textFields?[0].text else {return}
+            self?.submit(answer)
+        }
+        
+        ac.addAction(submitAction)
+        present(ac, animated: true)
     }
     
     @objc func clearList(){
        
     }
     
-   
+    func submit(_ answer: String){
+        shoppingList.insert(answer, at: 0)
+        let indexPath = IndexPath(row:0, section:0)
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
 }
 
