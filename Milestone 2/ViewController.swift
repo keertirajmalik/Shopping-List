@@ -45,7 +45,8 @@ extension ViewController {
     }
     
     @objc func clearList(){
-       
+        shoppingList.removeAll()
+        tableView.reloadData()
     }
     
     func submit(_ answer: String){
