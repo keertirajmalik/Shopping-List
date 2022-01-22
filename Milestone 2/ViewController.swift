@@ -15,7 +15,10 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         title = "Shopping List"
         // Do any additional setup after loading the view.
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(updateList))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(updateList))
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareList))
+        navigationItem.rightBarButtonItems = [addButton, shareButton]
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear",style: .done, target: self, action: #selector(clearList))
     }
     
@@ -47,6 +50,12 @@ extension ViewController {
     @objc func clearList(){
         shoppingList.removeAll()
         tableView.reloadData()
+    }
+    
+    @objc func shareList(){
+        let list = shoppingList.joined(separator: "\n")
+        let ac = UIActivityViewController(activityItems: [list], applicationActivities: nil)
+        present(ac, animated: true)
     }
     
     func submit(_ answer: String){
